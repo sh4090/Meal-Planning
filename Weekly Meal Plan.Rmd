@@ -1,0 +1,98 @@
+
+# Meal Plan
+
+Missing: more quantitatively driven approach to ingredient doses and choices to meet exact daily nutritional needs.
+
+```{r}
+# Onigiri Options
+onigiri <- c("oni_tuna mayo", "oni_boiled egg", "oni_sardine", "oni_ground beef", "oni_salmon", "oni_spicy tuna", "oni_zaalouk", "oni_cheese omelette", "oni_cheese", "oni_spam", "oni_surimi")
+
+# Kimbap Options
+k_options_protein <- c("egg", "surimi", "spam", "sardine", "tuna", "ground beef", "salmon")
+k_options_other <- c("cheese", "zaalouk", "hasbrown", "hummus", "potato", "beans" )
+kimbap <- matrix(data = NA, nrow = 200, ncol = 4)
+for(i in 1:200){
+  add_ons <- c(sample(k_options_protein, 1), sample(k_options_other, 1))
+  kimbap_combo <- c("vegetables", "rice", add_ons)
+  kimbap[i,] <- kimbap_combo
+}
+kimbap = unique(kimbap)
+
+# Sandwich Options
+sandwich <- c("san_cucumber", "san_zaalouk", "san_omelette", "san_salmon", "san_spam", "san_sardine w/ pickles & egg salad", "san_PB & J", "san_egg salad", "san_tuna salad", "san_tuna & tomato sauce", "san_grilled cheese", "san_caramelized onion", "san_ground beef", "san_spiced potato (Aloo)", "san_Bocadios mfergue3", "san_sardine & butter", "san_hummus & tomato")
+
+# Rice Add-Ons
+rice_add <- c("rice_ground beef", "rice_lentil soup", "rice_sardines & tomato sauce", "rice_zaalouk", "rice_sweet peas & corn", "rice_seffa", "rice_butter & pepper", "rice_tuna mayo", "rice_egg fried", "rice_chicken w/ lemon & garlic")
+
+# Soup Options 
+soup_choice <- c("soup_lentil", "soup_broccoli cheddar", "soup_chicken & wild rice", "soup_miso", "soup_mashed potato", "soup_tomato", "soup_cream of mushroom", "soup_vegetable", "soup_beans")
+
+# Breakfast Options
+protein = c("boiled eggs", "omelette", "spam", "hashbrown", "chicken")
+carb = c("pancake", "bread", "granola w/ yogurt", "oats")
+fruit = c("apple juice", "orange juice", "fruit")
+
+# Snack Options
+snacks = c("baby carrots & hummus", "apple slices", "dates & nuts", "cheez-it 1.5 oz", "string cheese", "granola bar", "seaweed snack", "wasabi peas", "muffin", "boiled egg", "fruit mix")
+
+# Meal Plan
+options <- c("onigiri", "kimbap", "sandwich", "rice", "soup")
+meals <- sample(options, 14, replace = T)
+  # indices of options
+i1 = which(meals == "onigiri")
+i2 = which(meals == "kimbap")
+i3 = which(meals == "sandwich")
+i4 = which(meals == "rice")
+i5 = which(meals == "soup")
+  # extracting options
+    # lunch and dinner
+oni = sample(onigiri, length(i1))
+kim = matrix(data = NA, nrow = length(i2), ncol = 4)
+kim_i = sample(1:nrow(kimbap), length(i2))
+for(i in 1:length(i2)){
+  kim[i,] = kimbap[kim_i[i],]
+}
+san = sample(sandwich, length(i3))
+rice = sample(rice_add, length(i4))
+soup = sample(soup_choice, length(i5))
+    # breakfast
+breakfast = matrix(data = NA, nrow = 7, ncol = 3)
+breakfast[,1] = sample(protein, 7, replace = T)
+breakfast[,2] = sample(carb, 7, replace = T)
+breakfast[,3] = sample(fruit, 7, replace = T)
+    # snacks
+snack = matrix(data = sample(snacks, 14, replace = T), nrow = 2, ncol = 7)
+snack = as.data.frame(snack)
+  # substituting option (except kimbap & breakfast)
+meals[i1] <- oni
+meals[i3] <- san
+meals[i4] <- rice
+meals[i5] <- soup
+  # print the timetable
+week = matrix(data = meals, nrow = 2, ncol = 7)
+week = as.data.frame(week, row.names = c("lunch", "dinner"))
+colnames(week) = c("monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday")
+breakfast = as.data.frame(breakfast)
+row.names(breakfast) = c("monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday")
+colnames(breakfast) = c("protein", "carb", "fruit")
+colnames(snack) = c("monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday")
+row.names(snack) = c("snack 1", "snack 2")
+
+breakfast
+week
+kim
+snack
+
+# List
+breakfast_m = as.matrix(breakfast)
+week_m = as.matrix(week)
+snack_m = as.matrix(snack)
+list("breakfast", breakfast_m, "lunch & dinner", week_m, "kimbap specific", kim, "snacks", snack_m)
+```
+
+# Groceries List
+
+# Groceries Budget
+
+
+
